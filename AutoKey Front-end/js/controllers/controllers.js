@@ -2,25 +2,41 @@
  * Created by Gibran Polonsky on 14/01/2016.
  */
 
-autoKey.controller('ClaveCtrl', function($scope, ClaveData){
+autoKey.controller('ClaveCtrl', function($scope, ClaveData, FormularioData, AsignaturaData, $rootScope, $location){
+
 
     $scope.count = 1;
     $scope.data ={};
+    $scope.data.clave = {};
     $scope.data.claves1 = [];
     $scope.data.claves2 = [];
     $scope.data.claves3 = [];
 
     $scope.showModal = true;
 
-    $scope.data.clave= {};
-
-    $scope.data.clave.idClave = 1123;
 
 
+    $scope.data.clave.jefe =  $rootScope.globals.instructor.nombreCompleto;
+    $scope.data.clave.idInstructor =  $rootScope.globals.instructor.idInstructor;
+
+
+    //$rootScope.globals.currentUser.idUsuario
+
+    AsignaturaData.getAsignaturas().success(function(data){
+        $scope.asignaturas = data;
+    });
 
     $scope.toogleModal = function(clave){
         displayClaves();
         $scope.showModal = !$scope.showModal;
+    };
+
+    $scope.limit50 = function(){
+        if($scope.data.clave.length > 50){
+            $scope.data.clave.length = 50;
+        }else{
+            $scope.data.clave.length = parseInt($scope.data.clave.length);
+        }
     };
 
     $scope.save = function(){
@@ -31,32 +47,59 @@ autoKey.controller('ClaveCtrl', function($scope, ClaveData){
 
         if(isAllSelected($scope.data.claves1) && isAllSelected($scope.data.claves2) && isAllSelected($scope.data.claves3)){
 
-            $('#btnSave').addClass('m-progress');
+            var totalScore = 0;
+            totalScore = getTotalScore($scope.data.claves1) + getTotalScore($scope.data.claves2) + getTotalScore($scope.data.claves3);
 
-            $scope.data.claves1 = jQuery.grep($scope.data.claves1, function(n){ return (n); });
-            $scope.data.claves2 = jQuery.grep($scope.data.claves2, function(n){ return (n); });
-            $scope.data.claves3 = jQuery.grep($scope.data.claves3, function(n){ return (n); });
+            if(totalScore === 100){
+                $('#btnSave').addClass('m-progress');
 
-            ClaveData.saveClave($scope.data).success(function(data){
+                $scope.data.claves1 = jQuery.grep($scope.data.claves1, function(n){ return (n); });
+                $scope.data.claves2 = jQuery.grep($scope.data.claves2, function(n){ return (n); });
+                $scope.data.claves3 = jQuery.grep($scope.data.claves3, function(n){ return (n); });
+
+                if($scope.data.clave.bachiller){
+                    $scope.data.clave.bachiller = 1;
+                }else{
+                    $scope.data.clave.bachiller = 0;
+                }
+
+                FormularioData.saveFormulario($scope.data.clave).success(function(){
+                    FormularioData.getLast().success(function(data){
+                        setFormulario($scope.data.claves1, data[0].idFormulario);
+                        setFormulario($scope.data.claves2, data[0].idFormulario);
+                        setFormulario($scope.data.claves3, data[0].idFormulario);
+                        ClaveData.saveClave($scope.data).success(function(data){
+                            swal({
+                                title: "Muchas Gracias",
+                                text: "Clave Agregada Exitosa",
+                                type: "success",
+                                confirmButtonClass: 'btn-success',
+                                confirmButtonText: 'Aceptar!'
+                            });
+                            $('#btnSave').removeClass('m-progress');
+                            $location.path('/home');
+                        }).error(function(){
+                            swal({
+                                title: "Error",
+                                text: "Algo Salio Mal",
+                                type: "error",
+                                confirmButtonClass: 'btn-danger',
+                                confirmButtonText: 'Aceptar!'
+                            });
+                            $('#btnSave').removeClass('m-progress');
+                        });
+                    });
+                });
+
+            }else{
                 swal({
-                    title: "Muchas Gracias",
-                    text: "Clave Agregada Exitosa",
-                    type: "success",
-                    confirmButtonClass: 'btn-success',
+                    title: "",
+                    text: "El total no es 100, porfavor revise el valor de las respuestas. \n total:" + totalScore,
+                    type: "warning",
+                    confirmButtonClass: 'btn-warning',
                     confirmButtonText: 'Aceptar!'
                 });
-                $('#btnSave').removeClass('m-progress');
-            }).error(function(){
-                swal({
-                    title: "Error",
-                    text: "Algo Salio Mal",
-                    type: "error",
-                    confirmButtonClass: 'btn-danger',
-                    confirmButtonText: 'Aceptar!'
-                });
-                $('#btnSave').removeClass('m-progress');
-            });
-
+            }
         }else{
             swal({
                 title: "",
@@ -73,7 +116,6 @@ autoKey.controller('ClaveCtrl', function($scope, ClaveData){
         randomize();
     };
 
-
     function randomize(){
         $('input[name=""][type=radio]').remove();
         var count = 1;
@@ -85,13 +127,13 @@ autoKey.controller('ClaveCtrl', function($scope, ClaveData){
     function displayClaves(){
         for($scope.count; $scope.count <= $scope.data.clave.length ; $scope.count++){
             if($scope.count <= 17){
-                $scope.data.claves1[$scope.count] = {numeroPregunta: $scope.count, valor: 2, clave: $scope.clave};
+                $scope.data.claves1[$scope.count] = {numeroPregunta: $scope.count, valor: 2, idFormulario: $scope.clave};
             }
             if($scope.count > 17 && $scope.count <= 34){
-                $scope.data.claves2[$scope.count] = {numeroPregunta: $scope.count, valor: 2, clave: $scope.clave};
+                $scope.data.claves2[$scope.count] = {numeroPregunta: $scope.count, valor: 2, idFormulario: $scope.clave};
             }
-            if($scope.count > 34 && $scope.count <= 51){
-                $scope.data.claves3[$scope.count] = {numeroPregunta: $scope.count, valor: 2, clave: $scope.clave};
+            if($scope.count > 34 && $scope.count <= 50){
+                $scope.data.claves3[$scope.count] = {numeroPregunta: $scope.count, valor: 2, idFormulario: $scope.clave};
             }
         }
     }
@@ -104,12 +146,24 @@ autoKey.controller('ClaveCtrl', function($scope, ClaveData){
     function isAllSelected(claves){
         var isAllSelected = true;
         angular.forEach(claves, function(Element, index){
-
             if(typeof Element.respuesta === "undefined"){
                 isAllSelected =  false;
             }
         });
         return isAllSelected;
+    }
+
+    function getTotalScore(claves){
+        var score = 0;
+        angular.forEach(claves, function(Element, index){
+            score += Element.valor;
+        });
+        return score;
+    }
+    function setFormulario(claves, idFormulario){
+        angular.forEach(claves, function(Element, index){
+            Element.idFormulario = idFormulario;
+        });
     }
 
 });

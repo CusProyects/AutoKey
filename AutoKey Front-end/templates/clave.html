@@ -21,18 +21,16 @@
     <center>
         <div class="page-header">
             <div  class="logo-section">
-                <img class="inline" src="https://pbs.twimg.com/profile_images/473681342819880960/sLM1Wtq9.png">
+                <img class="inline" src="../img/kinalLogo.png" style="width: 10%; height: 10%">
                 <div class="inline">
                     <h1>Examen <small>Generador Automatico de claves</small></h1>
                 </div>
                 <div></div>
                 <div class="inline card card-block alert-warning">
-                    <b>Asignatura: </b>{{data.clave.asignatura}}
+                    <b>Asignatura: </b>{{data.clave.idAsignatura}}
                 </div>
-                <div class="inline card card-block alert-info">
-                    <b>Numero de clave: </b> {{data.clave.idClave}}
                 </div>
-                <div class="inline card card-block alert-danger">
+                <div class="inline card card-block alert-danger" disabled>
                     <b>Jefe de equipo:  </b>{{data.clave.jefe}}
                 </div>
                 <div class="inline card card-block alert-success">
@@ -199,27 +197,68 @@
         <modal title="Configuracion de la clave" visible="showModal">
             <form>
                 <div class="form-group">
-                    <label for="asignatura" class="control-label">Asignatura:</label>
-                    <input ng-model="data.clave.asignatura" id="asignatura" type="text" class="form-control input-lg">
-                </div>
-                <div class="form-group">
                     <label for="jefe" class="control-label">Jefe Equipo Tecnico:</label>
-                    <input ng-model="data.clave.jefe" id="jefe" type="text" class="form-control input-lg">
+                    <input ng-model="data.clave.jefe" id="jefe" type="text" class="form-control input-lg" disabled>
                 </div>
 
                 <div class="form-group">
-                    <label for="length" class="control-label">Cantidad de Preguntas:</label>
-                    <input ng-model="data.clave.length" id="length" type="number" class="form-control input-lg">
+                    <label for="asignatura" class="control-label">Asignatura:</label>
+                        <select ng-model="data.clave.idAsignatura" id="asignatura" class="form-control input-lg" ng-options="item.idAsignatura as item.asignatura for item in asignaturas"></select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="grado" class="control-label">Grado:</label>
+                    <select ng-model="data.clave.grado" id="grado" class="form-control input-lg">
+                        <option value="1">Primero Básico</option>
+                        <option value="2">Segundo Básico</option>
+                        <option value="3">Tercero Básico</option>
+                        <option value="4">Cuarto Diversificado</option>
+                        <option value="5">Quinto Diversificado</option>
+                        <option value="6">Sexto Diversificado</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="bimestre" class="control-label">Bimestre:</label>
+                    <select ng-model="data.clave.bimestre" id="bimestre" class="form-control input-lg">
+                        <option value="1">Primero</option>
+                        <option value="2">Segundo</option>
+                        <option value="3">Tercero</option>
+                        <option value="4">Cuarto</option>
+                        <option value="5">Final</option>
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="jornada" class="control-label">Jornada:</label>
+                    <select ng-model="data.clave.jornada" id="jornada" class="form-control input-lg">
+                        <option value="JV">Vespertina</option>
+                        <option value="JM">Matutina</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
                     <label for="copias" class="control-label">Copias:</label>
-                    <input ng-model="data.clave.copias" id="copias" type="number" class="form-control input-lg">
+                    <input ng-model="data.clave.copias" id="copias" type="number" class="form-control input-lg" required>
                 </div>
                 <div class="form-group">
                     <label for="forma" class="control-label">Forma:</label>
-                    <input ng-model="data.clave.forma" id="forma" type="name" class="form-control input-lg">
+                    <input ng-model="data.clave.forma" id="forma" type="name" class="form-control input-lg" required>
                 </div>
+
+                <div class="form-group">
+                    <label for="length" class="control-label">Cantidad de Preguntas:</label>
+                    <input ng-model="data.clave.length" id="length" type="number" class="form-control input-lg" ng-change="limit50()" required>
+                </div>
+
+                <div class="checkbox">
+                    <label><input ng-model="data.clave.bachiller" class="form-control input-lg" type="checkbox" >Para bachilleres </label>
+                </div>
+
+
             </form>
 
             <button ng-click="toogleModal(data.clave)" class="btn btn-primary">Aceptar</button>

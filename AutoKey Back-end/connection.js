@@ -21,7 +21,7 @@ var connection = {
                     if(row.length > 0){
                         res.json(row);
                     }else{
-                        res.json({message:"data not found"});
+                        res.json(false);
                     }
                 }else{
                     console.log(err);
@@ -32,4 +32,4 @@ var connection = {
         db.query(q, function(err, row){ });
     }
 };
-module.exports=connection;
+module.exports = connection;
