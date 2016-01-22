@@ -17,6 +17,7 @@ var formulario = {
 
         d = new Date();
         db.sentence(req, res, "INSERT INTO formulario(idAsignatura, idInstructor, copias, forma, fecha, jornada, bachiller, grado, bimestre) VALUES('"+ req.body.idAsignatura  +"', '"+ req.body.idInstructor +"', '"+ req.body.copias  +"', '"+ req.body.forma +"', '" + d.yyyymmdd() +"', '"+ req.body.jornada +"', '"+ req.body.bachiller +"', '"+ req.body.grado +"', '"+ req.body.bimestre + "');");
+        res.json(true);
     },
     last: function(req, res){
         db.query(req, res, "SELECT * FROM formulario ORDER BY idFormulario DESC LIMIT 1");

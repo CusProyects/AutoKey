@@ -65,6 +65,7 @@ autoKey.controller('ClaveCtrl', function($scope, ClaveData, FormularioData, Asig
 
                 FormularioData.saveFormulario($scope.data.clave).success(function(){
                     FormularioData.getLast().success(function(data){
+
                         setFormulario($scope.data.claves1, data[0].idFormulario);
                         setFormulario($scope.data.claves2, data[0].idFormulario);
                         setFormulario($scope.data.claves3, data[0].idFormulario);
