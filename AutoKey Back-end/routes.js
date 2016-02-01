@@ -33,7 +33,7 @@ route.get('/formulario', formulario.last);
 
 route.get('/formulario/:idInstructor', formulario.search);
 
-route.get('/asignatura', asignatura.all);
+route.get('/asignatura/nivel/:idNivel', asignatura.all);
 
 route.get('/asignatura/:idAsignatura', asignatura.search);
 

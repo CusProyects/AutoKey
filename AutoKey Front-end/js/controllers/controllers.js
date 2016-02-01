@@ -14,6 +14,7 @@ autoKey.controller('ClaveCtrl', function($scope, ClaveData, FormularioData, Asig
 
     $scope.showModal = true;
 
+    $scope.asignaturas = {};
 
 
     $scope.data.clave.jefe =  $rootScope.globals.instructor.nombreCompleto;
@@ -22,9 +23,10 @@ autoKey.controller('ClaveCtrl', function($scope, ClaveData, FormularioData, Asig
 
     //$rootScope.globals.currentUser.idUsuario
 
-    AsignaturaData.getAsignaturas().success(function(data){
-        $scope.asignaturas = data;
-    });
+  //  AsignaturaData.getAsignaturas().success(function(data){
+   //     $scope.asignaturas = data;
+   // });
+
 
     $scope.toogleModal = function(clave){
         displayClaves();
@@ -32,12 +34,40 @@ autoKey.controller('ClaveCtrl', function($scope, ClaveData, FormularioData, Asig
     };
 
     $scope.limit50 = function(){
+
         if($scope.data.clave.length > 50){
             $scope.data.clave.length = 50;
         }else{
             $scope.data.clave.length = parseInt($scope.data.clave.length);
         }
+        if($scope.data.clave.length < 0){
+            $scope.data.clave.length = 0;
+        }
     };
+    $scope.limit1000 = function(){
+
+        if($scope.data.clave.copias > 1000){
+            $scope.data.clave.copias = 1000;
+        }else{
+            $scope.data.clave.copias = parseInt($scope.data.clave.copias);
+        }
+        if($scope.data.clave.copias < 0){
+            $scope.data.clave.copias = 0;
+        }
+    };
+
+
+    $scope.setAsignaturas = function(){
+            if($scope.data.clave.grado < 4){
+                AsignaturaData.getAsignaturas(3).success(function(data){
+                   $scope.asignaturas = data;
+                });
+            }else{
+                AsignaturaData.getAsignaturas(2).success(function(data){
+                    $scope.asignaturas = data;
+                });
+            }
+    }
 
     $scope.save = function(){
 

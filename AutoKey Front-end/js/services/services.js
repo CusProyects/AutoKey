@@ -39,8 +39,8 @@ autoKey.factory('AsignaturaData', function($http, $rootScope){
 
     var AsignaturaData = {};
 
-    AsignaturaData.getAsignaturas = function(){
-        return $http.get($rootScope.server + 'asignatura');
+    AsignaturaData.getAsignaturas = function(idNivel){
+        return $http.get($rootScope.server + 'asignatura/nivel/' + idNivel);
     };
     AsignaturaData.getAsignatura = function(idAsignatura){
         return $http.get($rootScope.server + 'asignatura/' + idAsignatura );

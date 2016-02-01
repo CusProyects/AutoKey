@@ -38,7 +38,7 @@ autoKey.config(['$routeProvider', '$httpProvider',
 
 autoKey.run(function($rootScope, $location, $cookieStore){
   $rootScope.showNavBar = false;
-  $rootScope.server = 'http://localhost:3000/';
+  $rootScope.server = 'http://192.168.17.109:3000/';
 
   $rootScope.globals = $cookieStore.get('globals') || {};
 

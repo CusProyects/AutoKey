@@ -40,7 +40,7 @@ autoKey.controller('HomeCtrl', function($scope, $rootScope, $q, FormularioData, 
                         content: [
                             {
                                 columns: [
-                                    {image: base64Img , width: 240, height: 80, margin: [134,0,0,0] }
+                                    {image: base64Img , width: 240, height: 90, margin: [134,0,0,0] }
                                 ]
                             },
                             {text: " "},{text: " "},{text: " "},
@@ -96,7 +96,7 @@ autoKey.controller('HomeCtrl', function($scope, $rootScope, $q, FormularioData, 
                     defer.resolve(docDefinition);
 
                     defer.promise.then(function(data){
-                        pdfMake.createPdf(data).open();
+                        pdfMake.createPdf(data).download( formulario.asignatura +'_' + formulario.forma +'.pdf');
                     });
                 });
             });

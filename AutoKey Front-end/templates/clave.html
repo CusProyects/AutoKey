@@ -201,15 +201,12 @@
                     <input ng-model="data.clave.jefe" id="jefe" type="text" class="form-control input-lg" disabled>
                 </div>
 
-                <div class="form-group">
-                    <label for="asignatura" class="control-label">Asignatura:</label>
-                        <select ng-model="data.clave.idAsignatura" id="asignatura" class="form-control input-lg" ng-options="item.idAsignatura as item.asignatura for item in asignaturas"></select>
-                </div>
+
 
 
                 <div class="form-group">
                     <label for="grado" class="control-label">Grado:</label>
-                    <select ng-model="data.clave.grado" id="grado" class="form-control input-lg">
+                    <select ng-change="setAsignaturas()" ng-model="data.clave.grado" id="grado" class="form-control input-lg">
                         <option value="1">Primero Básico</option>
                         <option value="2">Segundo Básico</option>
                         <option value="3">Tercero Básico</option>
@@ -217,6 +214,11 @@
                         <option value="5">Quinto Diversificado</option>
                         <option value="6">Sexto Diversificado</option>
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="asignatura" class="control-label">Asignatura:</label>
+                    <select ng-model="data.clave.idAsignatura" id="asignatura" class="form-control input-lg" ng-options="item.idAsignatura as item.asignatura for item in asignaturas"></select>
                 </div>
 
 
@@ -237,16 +239,22 @@
                     <select ng-model="data.clave.jornada" id="jornada" class="form-control input-lg">
                         <option value="JV">Vespertina</option>
                         <option value="JM">Matutina</option>
+                        <option value="Ambas">Ambas</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="copias" class="control-label">Copias:</label>
-                    <input ng-model="data.clave.copias" id="copias" type="number" class="form-control input-lg" required>
+                    <label for="copias" class="control-label">Cantidad de examenes a reproducir:</label>
+                    <input ng-change="limit1000()" ng-model="data.clave.copias" id="copias" type="number" class="form-control input-lg" required>
                 </div>
                 <div class="form-group">
                     <label for="forma" class="control-label">Forma:</label>
-                    <input ng-model="data.clave.forma" id="forma" type="name" class="form-control input-lg" required>
+                    <select ng-model="data.clave.forma"  id="forma" class="form-control input-lg">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
