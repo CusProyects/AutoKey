@@ -15,12 +15,12 @@ autoKey.controller('LoginCtrl', function($scope, $location, AuthData, Instructor
 
                 InstructorData.getInstructor(data[0].idUsuario).success(function(instructor){
 
-                    if(instructor !== 'false'){
+                    //if(instructor !== 'false'){
                         AuthData.saveCredentials(data[0], instructor[0]);
                         $location.path("/home");
-                    }else{
-                        alert('USTED NO ES JEFE DE GRUPO :D');
-                    }
+                   // }else{
+                    //    alert('USTED NO ES JEFE DE GRUPO :D');
+                    //}
 
 
                 });

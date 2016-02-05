@@ -37,6 +37,24 @@ autoKey.config(['$routeProvider', '$httpProvider',
 
 
 autoKey.run(function($rootScope, $location, $cookieStore){
+
+  $rootScope.getCurrentBim = function(){
+    var currentMonth =  new Date().getMonth();
+    var currentBim = 0;
+    if ( currentMonth <2 ){
+      currentBim = 1;
+    }else if(currentMonth < 4){
+      currentBim = 2;
+    }else if(currentMonth < 6){
+      currentBim = 3;
+    }else if(currentMonth < 8){
+      currentBim = 4;
+    }else if(currentMonth < 9){
+      currentBim = 6;
+    }
+    return currentBim;
+  };
+
   $rootScope.showNavBar = false;
   $rootScope.server = 'http://192.168.17.109:3000/';
 

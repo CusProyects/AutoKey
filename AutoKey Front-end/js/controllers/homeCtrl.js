@@ -24,6 +24,7 @@ autoKey.controller('HomeCtrl', function($scope, $rootScope, $q, FormularioData, 
         switch(formulario.jornada){
             case "JV": jornada = "Vespertina"; break;
             case "JM": jornada = "Matutina"; break;
+            case "Ambas": jornada = "Ambas"; break;
         }
 
         convertToDataURLviaCanvas('img/header.png', function(base64Img){
@@ -37,6 +38,12 @@ autoKey.controller('HomeCtrl', function($scope, $rootScope, $q, FormularioData, 
                     var defer = $q.defer();
 
                     var docDefinition = {
+                        info: {
+                            title: formulario.asignatura + "_" + formulario.forma,
+                            author: $rootScope.globals.instructor.nombreCompleto,
+                            subject: 'Clave de examen de: ' + formulario.asignatura,
+                            keywords: 'AutoKey',
+                        },
                         content: [
                             {
                                 columns: [
@@ -46,7 +53,7 @@ autoKey.controller('HomeCtrl', function($scope, $rootScope, $q, FormularioData, 
                             {text: " "},{text: " "},{text: " "},
                             {text: 'Clave de examen', style: 'header'},
                             {text: 'Jefe de equipo técnico: ' + $rootScope.globals.instructor.nombreCompleto},
-                            {text: 'Asignatura: ' + formulario.asignatura},
+                            {text: 'Asignatura: ' + formulario.asignatura + " (" + formulario.idAsignatura + ")"},
                             {text: 'Formulario: ' + formulario.idFormulario},
                             {text: 'Copias: ' + formulario.copias},
                             {text: 'Forma: ' + formulario.forma },
@@ -96,13 +103,14 @@ autoKey.controller('HomeCtrl', function($scope, $rootScope, $q, FormularioData, 
                     defer.resolve(docDefinition);
 
                     defer.promise.then(function(data){
-                        pdfMake.createPdf(data).download( formulario.asignatura +'_' + formulario.forma +'.pdf');
+                        pdfMake.createPdf(data).open(formulario.asignatura + "_" + formulario.forma);
                     });
                 });
             });
 
         });
     };
+
 
     function parseData (data){
         var master = {
@@ -151,10 +159,16 @@ autoKey.controller('HomeCtrl', function($scope, $rootScope, $q, FormularioData, 
 
         //http://stackoverflow.com/questions/6150289/how-to-convert-image-into-base64-string-using-javascript
     FormularioData.getFormularios($rootScope.globals.instructor.idInstructor).success(function(data){
+
         if(data != "false"){
-            $scope.data.formularios = data;
-            angular.forEach($scope.data.formularios, function(Element, index){
-                setAsignatura(Element);
+            $scope.data.formularios = [];
+            angular.forEach(data, function(Element, index){
+
+                if(Element.bimestre == $rootScope.getCurrentBim()){
+                    $scope.data.formularios.push(Element);
+                    setAsignatura(Element);
+                }
+
             });
         }else{
             $scope.data.formularios = {};
