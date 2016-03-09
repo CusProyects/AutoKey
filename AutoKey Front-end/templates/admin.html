@@ -1,0 +1,80 @@
+<style>
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+        background-color: #286090;
+        color: #FFFFFF;
+        border-radius: 10px;
+    }
+</style>
+<div class="col-md-12" style="margin-top: 50px;">
+
+    <h2>Administración</h2>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>
+                idFormulario
+            </th>
+            <th>
+                JET
+            </th>
+            <th>
+                Asignatura
+            </th>
+            <th>
+                Grado
+            </th>
+            <th>
+                Bimestre
+            </th>
+            <th>
+                Copias
+            </th>
+            <th>
+                Forma
+            </th>
+            <th>
+                Fecha
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in data.formularios">
+            <td> {{ item.idFormulario }}</td>
+            <td> {{ item.instructor }} </td>
+            <td> {{ item.asignatura}}</td>
+            <td> {{ item.grado }} </td>
+            <td> {{ item.bimestre }} </td>
+            <td> {{ item.copias }}</td>
+            <td> {{ item.forma }}</td>
+            <td> {{ item.fecha | date:'dd-MM-yyyy ' }} </td>
+            <td><button class="btn btn-danger btn-sm" ng-click="deleteFormulario( item )">
+                <i class="glyphicon glyphicon-remove"></i>
+                </button>
+                <button class="btn btn-warning btn-sm" ng-click="goTo('/statistics/' + item.idFormulario)">
+                    <i class="glyphicon glyphicon-equalizer"></i>
+                </button>
+
+                <button class="btn btn-info btn-sm" ng-click="downloadPDF( item )">
+                    <i class="glyphicon glyphicon-save"></i>
+                </button>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-info" role="alert">
+
+        <h4>Recuerde eliminar las claves si las descarga, revise la papelera de reciclaje <b>ADMINISTRADOR</b></h4>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>Document</title>
+        </head>
+        <body>
+
+        </body>
+        </html>
+    </div>
+
+</div>

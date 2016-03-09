@@ -1,15 +1,16 @@
 /**
  * Created by Gibran Polonsky on 20/01/2016.
  */
-autoKey.controller('HomeCtrl', function($scope, $rootScope, $q, $location, FormularioData, ClaveData, AsignaturaData){
+autoKey.controller('HomeCtrl', function($scope, $rootScope, $q, FormularioData, ClaveData, AsignaturaData){
 
     $scope.data = {};
 
-    if($rootScope.globals.currentUser.name == "admin"){
-        $location.path('/admin');
-    }
+
 
     $scope.downloadPDF = function(formulario){
+
+        console.log('SUPER FORM', formulario);
+
         var grado = "";
         switch(formulario.grado){
             case "1": grado = "Primero Básico"; break;
@@ -23,7 +24,6 @@ autoKey.controller('HomeCtrl', function($scope, $rootScope, $q, $location, Formu
         switch(formulario.jornada){
             case "JV": jornada = "Vespertina"; break;
             case "JM": jornada = "Matutina"; break;
-            case "Ambas": jornada = "Ambas"; break;
         }
 
         convertToDataURLviaCanvas('img/header.png', function(base64Img){
@@ -37,12 +37,6 @@ autoKey.controller('HomeCtrl', function($scope, $rootScope, $q, $location, Formu
                     var defer = $q.defer();
 
                     var docDefinition = {
-                        info: {
-                            title: formulario.asignatura + "_" + formulario.forma,
-                            author: $rootScope.globals.instructor.nombreCompleto,
-                            subject: 'Clave de examen de: ' + formulario.asignatura,
-                            keywords: 'AutoKey'
-                        },
                         content: [
                             {
                                 columns: [
@@ -102,14 +96,13 @@ autoKey.controller('HomeCtrl', function($scope, $rootScope, $q, $location, Formu
                     defer.resolve(docDefinition);
 
                     defer.promise.then(function(data){
-                        pdfMake.createPdf(data).open(formulario.asignatura + "_" + formulario.forma);
+                        pdfMake.createPdf(data).open();
                     });
                 });
             });
 
         });
     };
-
 
     function parseData (data){
         var master = {
@@ -158,16 +151,10 @@ autoKey.controller('HomeCtrl', function($scope, $rootScope, $q, $location, Formu
 
         //http://stackoverflow.com/questions/6150289/how-to-convert-image-into-base64-string-using-javascript
     FormularioData.getFormularios($rootScope.globals.instructor.idInstructor).success(function(data){
-
         if(data != "false"){
-            $scope.data.formularios = [];
-            angular.forEach(data, function(Element, index){
-
-                if(Element.bimestre == $rootScope.getCurrentBim()){
-                    $scope.data.formularios.push(Element);
-                    setAsignatura(Element);
-                }
-
+            $scope.data.formularios = data;
+            angular.forEach($scope.data.formularios, function(Element, index){
+                setAsignatura(Element);
             });
         }else{
             $scope.data.formularios = {};

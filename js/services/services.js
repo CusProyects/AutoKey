@@ -20,12 +20,6 @@ autoKey.factory('FormularioData', function($http, $rootScope){
 
     var FormularioData = {};
 
-    FormularioData.get = function(idFormulario){
-
-        return $http.get($rootScope.server + 'formulario/get/' + idFormulario);
-
-    };
-
     FormularioData.saveFormulario = function(formulario){
         return $http.post($rootScope.server + 'formulario', formulario);
     };
@@ -36,13 +30,7 @@ autoKey.factory('FormularioData', function($http, $rootScope){
 
     FormularioData.getFormularios = function(idInstructor){
         return $http.get($rootScope.server + 'formulario/' + idInstructor);
-    };
-    FormularioData.getAll = function (){
-        return $http.get($rootScope.server + 'formulario/all');
-    };
-    FormularioData.delete = function(idFormulario){
-        return $http.delete($rootScope.server + 'formulario/' + idFormulario);
-    };
+    }
 
     return FormularioData;
 });
@@ -65,12 +53,8 @@ autoKey.factory('InstructorData', function($http, $rootScope){
     var InstructorData = {};
 
     InstructorData.getInstructor = function(idUsuario){
-        return $http.get($rootScope.server + 'instructor/usuario/' + idUsuario);
+        return $http.get($rootScope.server + 'instructor/' + idUsuario);
     };
-    InstructorData.get = function(idInstructor){
-        return $http.get($rootScope.server + 'instructor/' + idInstructor);
-    };
-
     return InstructorData;
 });
 
@@ -99,16 +83,5 @@ autoKey.factory('AuthData', function($http, $rootScope, $cookieStore){
     };
 
     return AuthData;
-
-});
-autoKey.factory('AciertoData', function($http, $rootScope){
-
-    var AciertoData = {};
-
-    AciertoData.get = function(idFormulario){
-        return $http.get($rootScope.server + 'acierto/' + idFormulario);
-    };
-
-    return AciertoData;
 
 });

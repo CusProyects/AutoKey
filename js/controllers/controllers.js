@@ -67,7 +67,7 @@ autoKey.controller('ClaveCtrl', function($scope, ClaveData, FormularioData, Asig
                     $scope.asignaturas = data;
                 });
             }
-    };
+    }
 
     $scope.save = function(){
 

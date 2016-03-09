@@ -1,0 +1,35 @@
+
+
+
+<div class="row"  style="margin-top: 50px;">
+    <div class="col-md-12">
+        <center>
+            <h2>Estadisticas de {{materia}}</h2>
+            <h4>Cantidad de alumnos examinados: {{count}}</h4>
+        </center>
+    </div>
+</div>
+
+<div class="row" >
+    <div class="col-md-6">
+        <h4>Porcentaje de acierto por pregunta</h4>
+        <div style="width: 100%">
+            <canvas id="canvas" height="450" width="600"></canvas>
+        </div>
+        <div class="alert alert-warning">{{ message }}</div>
+    </div>
+    <div class="col-lg-offset-1 col-md-4">
+        <center>
+            <h4>Porcentaje de aprobados</h4>
+            <div id="canvas-holder">
+                <canvas id="chart-area" width="500" height="500"/>
+            </div>
+        </center>
+
+    </div>
+</div>
+
+
+
+
+

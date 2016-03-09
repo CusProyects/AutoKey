@@ -1,0 +1,46 @@
+
+<div class="col-md-12" style="margin-top: 50px;">
+
+    <h2>Formularios</h2>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    idFormulario
+                </th>
+                <th>
+                    Asignatura
+                </th>
+				<th>
+					Grado
+				</th>
+                <th>
+                    Copias
+                </th>
+                <th>
+                    Forma
+                </th>
+                <th>
+                    Fecha
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in data.formularios">
+                <td> {{ item.idFormulario }}</td>
+                <td> {{ item.asignatura}}</td>
+				<td> {{ item.grado }} </td>
+                <td> {{ item.copias }}</td>
+                <td> {{ item.forma }}</td>
+                <td> {{ item.fecha | date:'dd-MM-yyyy ' }} </td>
+                <td><button class="btn btn-danger btn-sm" ng-click="downloadPDF( item )">PDF</button></td>
+            </tr>
+        </tbody>
+    </table>
+	<div class="alert alert-warning">
+		<h3>Recuerde eliminar las claves si las descarga, revise la papelera de reciclaje!</h3>
+	</div>
+
+</div>

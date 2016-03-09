@@ -21,7 +21,6 @@ var connection = {
                     if(row.length > 0){
                         res.json(row);
                     }else{
-                        console.log(q);
                         res.json(false);
                     }
                 }else{

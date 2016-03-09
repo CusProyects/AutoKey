@@ -49,29 +49,25 @@
     <script src="http://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.js"></script>
     <script src="https://cdn.rawgit.com/bpampuch/pdfmake/master/build/pdfmake.min.js"></script>
     <script src="https://cdn.rawgit.com/bpampuch/pdfmake/master/build/vfs_fonts.js"></script>
-
-    <script src="js/Chart.js"></script>
-
     <script src="js/app.js"></script>
 
 
     <script src="js/controllers/controllers.js"></script>
     <script src="js/controllers/loginCtrl.js"></script>
     <script src="js/controllers/homeCtrl.js"></script>
-    <script src="js/controllers/adminCtrl.js"></script>
-    <script src="js/controllers/statisticsCtrl.js"></script>
+
 
     <script src="js/services/services.js"></script>
     <script src="js/directives/directives.js"></script>
 
     <script>
-        autoKey.controller('MenuCtrl', function($scope, $rootScope, AuthData, $location){
+        autoKey.controller('MenuCtrl', function($scope, AuthData, $location){
             $scope.singout = function(){
                 AuthData.clearCredentials();
                 $location.path('/login');
             };
 
-            $rootScope.goTo = function(destination){
+            $scope.goTo = function(destination){
                 $location.path(destination);
             }
         });

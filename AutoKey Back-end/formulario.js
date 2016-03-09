@@ -6,6 +6,11 @@ var db = require('./connection');
 
 var formulario = {
 
+    get: function(req, res){
+
+        db.query(req, res, "SELECT * FROM formulario WHERE idFormulario =" +  req.params.idFormulario);
+    },
+
     save: function(req, res){
 
         Date.prototype.yyyymmdd = function() {
@@ -24,7 +29,15 @@ var formulario = {
     },
     search: function(req, res){
         db.query(req, res, "SELECT * FROM formulario WHERE idInstructor = " + req.params.idInstructor);
-    }
+    },
+	all: function(req, res){
+		db.query(req, res, "SELECT * FROM formulario ");
+	},
+	del: function(req, res){
+		db.sentence(req, res, "DELETE FROM clave WHERE idFormulario = " + req.params.idFormulario);
+		db.sentence(req, res, "DELETE FROM formulario WHERE idFormulario = " + req.params.idFormulario);
+		res.send(true);
+	}
 };
 
 

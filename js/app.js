@@ -19,22 +19,17 @@ autoKey.config(['$routeProvider', '$httpProvider',
       templateUrl: 'templates/login.html',
       controller: 'LoginCtrl'
     }).
-    when('/newClave', {
+
+      when('/newClave', {
         templateUrl: 'templates/clave.html',
         controller: 'ClaveCtrl'
     }).
+
     when('/home', {
       templateUrl: 'templates/home.html',
       controller: 'HomeCtrl'
     }).
-    when('/admin', {
-      templateUrl: 'templates/admin.html',
-      controller: 'AdminCtrl'
-    }).
-    when('/statistics/:idFormulario', {
-      templateUrl: 'templates/statistics.html',
-      controller: 'StatisticsCtrl'
-    }).
+
       otherwise({
         redirectTo: '/login'
       });
@@ -42,29 +37,10 @@ autoKey.config(['$routeProvider', '$httpProvider',
 
 
 autoKey.run(function($rootScope, $location, $cookieStore){
-
-  $rootScope.getCurrentBim = function(){
-    var currentMonth =  new Date().getMonth();
-    var currentBim = 0;
-    if ( currentMonth <2 ){
-      currentBim = 1;
-    }else if(currentMonth < 4){
-      currentBim = 2;
-    }else if(currentMonth < 6){
-      currentBim = 3;
-    }else if(currentMonth < 8){
-      currentBim = 4;
-    }else if(currentMonth < 9){
-      currentBim = 6;
-    }
-    return currentBim;
-  };
-
   $rootScope.showNavBar = false;
-  $rootScope.server = 'http://192.168.17.109:3000/';
+  $rootScope.server = 'http://intralab.kinal.edu.gt:3000/';
 
   $rootScope.globals = $cookieStore.get('globals') || {};
-
 
   if($rootScope.globals.currentUser){
       $location.path('/home');

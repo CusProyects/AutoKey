@@ -16,6 +16,8 @@ var asignatura = require('./asignatura');
 
 var instructor = require('./instructor');
 
+var acierto = require('./acierto_pregunta');
+
 var db = ('./connection');
 
 
@@ -31,13 +33,24 @@ route.post('/formulario', formulario.save);
 
 route.get('/formulario', formulario.last);
 
+route.get('/formulario/get/:idFormulario', formulario.get);
+
+route.get('/formulario/all', formulario.all);
+
+route.delete('/formulario/:idFormulario', formulario.del);
+
+
 route.get('/formulario/:idInstructor', formulario.search);
 
 route.get('/asignatura/nivel/:idNivel', asignatura.all);
 
 route.get('/asignatura/:idAsignatura', asignatura.search);
 
-route.get('/instructor/:idUsuario', instructor.search);
+route.get('/instructor/usuario/:idUsuario', instructor.search);
+
+route.get('/instructor/:idInstructor', instructor.get);
+
+route.get('/acierto/:idFormulario', acierto.search)
 
 
 module.exports = route;
